@@ -1,0 +1,7 @@
+---
+- name: The First PlayBook
+  hosts: all 
+  tasks:
+    - name: task1 print some hosts
+      ansible.builtin.debug: 
+       msg: "The host name is {{ ansible_nodename }}    "  
