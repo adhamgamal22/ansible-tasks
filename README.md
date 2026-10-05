@@ -41,4 +41,4 @@ The purpose of this repository is to practice **Ansible automation and configura
 
 **Adham Gamal**
 
-GitHub: [adhamgamal22](https://github.com/adhamgamal22)
+Linkedin: [Adham Gamal](https://www.linkedin.com/in/adhamgamal74)
