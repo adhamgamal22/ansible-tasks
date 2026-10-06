@@ -1,0 +1,11 @@
+Server Name    : {{ ansible_hostname }}
+Operating System: {{ ansible_distribution }} {{ ansible_distribution_version }}
+Kernel         : {{ ansible_kernel }}
+
+CPU Cores      : {{ ansible_processor_vcpus }}
+Memory         : {{ ansible_memtotal_mb }} MB
+
+Disk Space
+----------------------------------------
+Available      : {{ ansible_mounts[0].size_available // 1024 // 1024 // 1024 }} GB
+Total          : {{ ansible_mounts[0].size_total // 1024 // 1024 // 1024 }} GB

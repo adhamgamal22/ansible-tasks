@@ -1,0 +1,14 @@
+---
+- name: Generate System Audit Report
+  hosts: servers
+
+  tasks:
+
+    - name: Collect system facts
+      ansible.builtin.setup:
+
+    - name: Generate system report
+      ansible.builtin.template:
+        src: system_report.j2
+        dest: /tmp/server_info.txt
+        mode: "0644"
