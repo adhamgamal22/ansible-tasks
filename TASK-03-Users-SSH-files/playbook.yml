@@ -1,0 +1,47 @@
+---
+- name: Manage Users, Groups, and SSH Access
+  hosts: all
+  become: true
+
+  vars:
+    target_group: "devops"
+    target_user: "developer"
+    user_shell: "/bin/bash"
+
+  tasks:
+    - name: 1. Ensure target group exists
+      ansible.builtin.group:
+        name: "{{ target_group }}"
+        state: present
+
+    - name: 2. Create user and assign to groups
+      ansible.builtin.user:
+        name: "{{ target_user }}"
+        group: "{{ target_group }}"
+        groups: sudo 
+        append: yes
+        shell: "{{ user_shell }}"
+        create_home: yes
+        state: present
+
+    - name: 3. Ensure .ssh directory exists with correct permissions
+      ansible.builtin.file:
+        path: "/home/{{ target_user }}/.ssh"
+        state: directory
+        owner: "{{ target_user }}"
+        group: "{{ target_group }}"
+        mode: '0700'
+
+    - name: 4. Add SSH public key to authorized_keys
+      ansible.builtin.authorized_key:
+        user: "{{ target_user }}"
+        state: present
+        key: "{{ lookup('file', 'files/authorized_keys') }}"
+        manage_dir: no 
+
+    - name: 5. Ensure authorized_keys file has secure permissions
+      ansible.builtin.file:
+        path: "/home/{{ target_user }}/.ssh/authorized_keys"
+        owner: "{{ target_user }}"
+        group: "{{ target_group }}"
+        mode: '0600'
