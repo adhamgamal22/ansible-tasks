@@ -1,0 +1,11 @@
+---
+- name: Task 05-cron jobs
+  hosts: all
+
+  tasks:
+    - name: Log system uptime 
+      ansible.builtin.cron:
+        name: "Log System Uptime"
+        minute: "*/30"
+        job: "uptime >> /var/log/system_uptime.log"
+        state: present
